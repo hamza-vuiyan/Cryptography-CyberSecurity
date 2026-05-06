@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganography Studio</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">Steganography Studio</p>
+            <h1>Hide messages inside images.</h1>
+            <p class="subtitle">
+                Encode: Upload an image or capture from your camera, then hide a message inside it. Download the encoded image locally.
+                Decode: Upload an encoded image to extract the hidden message.
+            </p>
+        </section>
+
+        <section class="grid">
+            <!-- ENCODE - UPLOAD IMAGE -->
+            <article class="panel">
+                <h2>Encode - Upload Image</h2>
+                <p>Choose a PNG or JPG from your computer and hide a message inside it.</p>
+                <form id="encode-upload-form">
+                    <input type="file" id="encode-file-input" accept="image/*" required>
+                    <input type="text" id="encode-message-input" placeholder="Message to hide" required>
+                    <div class="actions">
+                        <button type="submit">Encode message</button>
+                    </div>
+                </form>
+                <div id="encode-upload-status" class="status"></div>
+                <div id="encode-upload-result" class="result-box" style="display: none;">
+                    <strong>Encoding successful!</strong>
+                    <button type="button" id="download-encoded" class="download-btn">Download encoded image</button>
+                </div>
+            </article>
+
+            <!-- ENCODE - CAMERA CAPTURE -->
+            <article class="panel">
+                <h2>Encode - Camera Capture</h2>
+                <p>Capture a photo from your camera and hide a message inside it.</p>
+                <div class="actions">
+                    <button type="button" id="open-camera-btn">Open camera</button>
+                </div>
+                <div id="camera-upload-status" class="status"></div>
+                <div id="camera-upload-result" class="result-box" style="display: none;">
+                    <strong>Photo captured!</strong>
+                    <div class="camera-preview-box">
+                        <img id="captured-preview" alt="Captured photo" style="max-width: 100%; border-radius: 10px;">
+                    </div>
+                    <input type="text" id="capture-message-input" placeholder="Message to hide" required>
+                    <button type="button" id="encode-capture-btn">Encode captured image</button>
+                </div>
+                <div id="camera-encode-result" class="result-box" style="display: none;">
+                    <strong>Capture encoded!</strong>
+                    <button type="button" id="download-camera-encoded" class="download-btn">Download encoded image</button>
+                </div>
+            </article>
+
+            <!-- DECODE - UPLOAD IMAGE -->
+            <article class="panel full-span">
+                <h2>Decode - Upload Image</h2>
+                <p>Upload an encoded image to extract the hidden message.</p>
+                <form id="decode-form">
+                    <input type="file" id="decode-file-input" accept="image/*" required>
+                    <div class="actions">
+                        <button type="submit">Decode image</button>
+                    </div>
+                </form>
+                <div id="decode-status" class="status"></div>
+                <div id="decode-result" class="result-box" style="display: none;">
+                    <strong>Decoded message</strong>
+                    <div id="decoded-message"></div>
+                </div>
+            </article>
+        </section>
+
+        <!-- CAMERA MODAL -->
+        <div id="camera-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Capture Photo</h3>
+                    <button type="button" id="close-camera-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <video id="camera-video" autoplay playsinline muted></video>
+                    <canvas id="capture-canvas" hidden></canvas>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="capture-photo-btn">Capture</button>
+                    <button type="button" id="cancel-camera-btn" class="btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
